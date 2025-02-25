@@ -1,0 +1,488 @@
+/*relativeは相対位置、absoluteは絶対位置*/
+body{
+    position: relative;
+    margin: 0;
+    background: #f4f4f4;
+}
+
+/*すべての要素にスタイルを適用*/
+*, 
+/*疑似要素（要素の前後に追加）*/
+*::before, *::after{
+    box-sizing: border-box; 
+}
+
+html{
+    color: #333;
+    font-family: "游ゴシック", "Hiragino Kaku Gothic Pro","メイリオ",
+    sans-selif !important;
+
+}
+
+h1, h2, h3, h4, h5{
+    margin: 0;
+    padding: 0;
+}
+
+img{
+    /*画像の幅が親要素を超えないように*/
+    max-width: 100%;
+    margin: 0;
+    /*枠線なし*/
+    border: 0;
+    /*画像の行内の位置を上にそろえる*/
+    vertical-align: top;
+}
+
+.pc{
+    display: block; /*通常表示*/
+}
+
+/*pc向けのときスマホは非表示*/
+.sp{
+    display: none;
+}
+
+.innner-block{
+    width: 1200px;
+    /*左右の余白を均等にして中央寄せ*/
+    margin: auto;
+    /*左右に20pxの余白*/
+    padding: 0 20px;
+    position: relative;
+}
+
+/*画像が761px以下の時（スマホ向け）*/
+@media screen and(max-width:761px){
+    /*pc向けを非表示*/
+    .pc{
+        display: none;
+    }
+    .sp{
+        display: block;
+    }
+    /*横並びにする。ibが何かわからなかった*/
+    .ib{
+        display: inline-block;
+    }
+    .innner-block{
+        padding: 0 15px;
+        width: 100%;
+    }
+}
+
+.wrap{
+    display: flex;
+    /* いっぱいになったら折り返す*/
+    flex-wrap: wrap;
+    /*要素を縦並びに(通常は横)*/
+    flex-direction: column;
+}
+
+
+.title-wrap .title{
+    font-size: 40px;
+    text-align: center;
+}
+
+@media screen and(max-width:761px){
+    .title-wrap .title{
+        font-size: 24px;
+    }
+    /*幅いっぱいに*/
+    .diagnose-wrap{
+        width: 100%;
+    }
+}
+
+/*ボックス（四角）*/
+.box-wrap{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    margin-top: 50px;
+}
+
+.box-wrap.is-inactive{
+    position: relative;
+}
+
+.box-wrap.box-wrap.is-inactive .box{
+    position: relative;
+}
+
+.box-wrap .box{
+    background-color: #f4f4f4;
+    /*灰色の影
+    box-shadow: 水平　垂直　ぼかしの半径　広がりの半径 色*/
+    box-shadow: 2.8285px 2.8285px 5px 0px
+    rgba(100, 100, 100, 0.1)inset,/*insetは内側に影*/
+    /*白色の影*/
+    -2.8285px -2.8285px 5px 0px
+    rgba(255, 255, 255, 1.0)inset;
+    /*角を丸く*/
+    border-radius: 20px;
+    padding: 80px 50px;
+    position: absolute;
+    /*中央に配置*/
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    /*はじめは表示しない*/
+    display: none;
+}
+
+/*好きな位置に置けるようにする*/
+.box-wrap .box-wrap.is-inactive{
+    position: absolute;
+}
+
+/*診断結果のタイトルに色*/
+.box-wrap .box.result .title{
+    color: #009999;
+}
+
+.box-wrap .box .text{
+    text-align: center;
+    font-size: 18px;
+}
+
+/*余白調整*/
+@media screen and(max-width:761px){
+    .box-wrap .box{
+        padding: 60px 30px 40px;
+    }
+}
+
+/*選択肢*/
+/*選択肢のタイトル*/
+.box-wrap .box .title{
+    font-size: 26px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 50px;
+}
+
+/*タイトルの下に横線を表示
+ 下線はbeforeでもafterでも可だが、タイトルの一部として扱いたい場合はbefore*/
+.box-wrap .box .title::before{
+    background: #999;
+    /*空文字をセット*/
+    content: "";
+    /*ブロック要素にしてサイズ指定*/
+    display: block;
+    height: 2px;
+    width: 60px;
+    position: absolute;
+    /*absoluteを使うと親要素(title)を基準に自由に配置できる。bottomを指定すると親要素の下端に行く*/
+    bottom: 0;
+    right: 0;
+    left: 0;
+    /*中央に*/
+    margin: auto;
+}
+
+/*numはクエスチョンナンバー*/
+.box-wrap .box .title .num{
+    font-size: 30px;
+}
+
+/*1つだけ選択*/
+.box-wrap .box .title .small{
+    font-size: 20px;
+}
+
+/*料理か自然か*/
+.box-wrap .box .select-wrap{
+    /*横並び*/
+    display: flex;
+    /*折り返し*/
+    flex-wrap: wrap;
+    /*上下を中央に*/
+    align-items: center;
+    /*左右を中央に*/
+    justify-content: center;
+}
+
+.box-wrap .box .select-wrap .select{
+    /*下側のグレーの影(2.8285pxずつ右下に移動)*/
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(100,100,100,0.1),
+    /*上側のホワイトの影(-2.8285pxずつ左上に移動)*/
+    -2.8285px -2.8285px 5px 0px rgba(255,255,255,1.0);
+    /*角を丸く*/
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    /*内側の余白*/
+    padding: 20px;
+    text-decoration: none;
+    text-align: center;
+    /*::afterで使う*/
+    position: relative;
+    /*親の幅から40pxを引いたものを2等分してボタンを並べる*/
+    width: calc((100% - 40px)/2);
+}
+
+/*ボタンがクリックされたとき*/
+.box-wrap .box .select-wrap .select::after{
+    /*角を丸く*/
+    border-radius: 50px;
+    content:"";
+    /*要素をブロック要素に*/
+    display: block;
+    /*ボタン全体を覆うエフェクト*/
+    height: 100%;
+    width: 100%;
+    /*押されたような影をつくる*/
+    box-shadow: 2.8285px  2.8285px 5px 0px rgba(0, 0, 0, 0.2)inset,
+    -2.8285px  -2.8285px 5px 0px rgba(255, 255, 255, 1.0)inset;
+    /*滑らかに変化させる(0.2秒かけて)*/
+    transition: all .2s ease-in-out;
+    /*最初は何もなかったことに*/
+    opacity: 0;
+    /*ぴったり重なるように*/
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/*非アクティブ（押せない状態）になったとき*/
+.box-wrap .box .select-wrap .select.is-inactive{
+    /*押された状態の形にする*/
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(0, 0, 0, 0.2) inset,
+    -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0) inset;
+}
+
+/*yesの選択肢を赤に*/
+.box-wrap .box .select-wrap .select.yes{
+    color: #ff6666;
+}
+
+/*noの選択肢を青に*/
+.box-wrap .box .select-wrap .select.no{
+    color: #33cccc;
+}
+
+/*pcやタブレットの時*/
+@media screen and(min-width:761px){
+    /*マウスを乗せたとき*/
+    .box-wrap .box .select-wrap .select:hover{
+        box-shadow: none;
+    }
+    /*さっきの疑似要素を押されたら表示*/
+    .box-wrap .box .select-wrap .select:hover::after{
+        opacity: 1;
+    }
+    /*押したボタンに影を付ける*/
+    .box-wrap .box .select-wrap .select.is-inactive:hover{
+        box-shadow: 2.8285px 2.8285px 5px 0px rgba(0, 0, 0, 0.2) inset,
+        -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0) inset;
+    }
+    .box-wrap .box .select-wrap .select.is-inactive:hover::after {
+        opacity: 0;
+    }
+
+    .box-wrap .box .select-wrap .select + .select{
+        margin-left: 20px;
+    }
+}
+
+@media screen and(max-width:761px){
+    .box-wrap .box .title{
+        font-size: 20px;
+        text-align: center;
+        position: relative;
+        /*paddingは内側の余白*/
+        padding-bottom: 20px;
+        /*marginは外側の余白*/
+        margin-bottom: 30px;
+    }
+    /*タイトル下の下線*/
+    .box-wrap .box .title::before{
+        width: 40px;
+    }
+    /*クエスチョンナンバー*/
+    .box-wrap .box .title .num{
+        font-size: 24px;
+        display: block;
+    }
+    /*ひとつだけ選択*/
+    .box-wrap .box .title .small{
+        display: block;
+        font-size: 14px;
+    }
+    /*選択肢を縦に並べる*/
+    .box-wrap .box .select-wrap{
+        flex-direction: column;
+    }
+    /*選択ボックス*/
+    .box-wrap .box .select-wrap .select{
+        padding: 12px;
+        width: 100%;
+    }
+    /*間隔をあける(2つ目以降のselectに適応)*/
+    .box-wrap .box .select-wrap .select + .select{
+        margin-top: 20px;
+    }
+}
+
+/*次の質問へ*/
+.btn-wrap{
+    margin-top: 70px;
+}
+.btn-wrap .tool-btn{
+    background: #009999;
+    border: 2px solid #009999;
+    border-radius: 50px;
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(100, 100, 100, 0.1),
+    -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0);
+    color: #fff;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    /*ボタンの最大幅*/
+    max-width: 400px;
+    /*中央に*/
+    margin: auto;
+    text-align: center;
+    /*下線なし*/
+    text-decoration: none;
+    padding: 13px 20px 12px;
+    position: relative;
+    transition: 0.2s ease-in-out;
+    /*400pxまで*/
+    width: 100%;
+}
+
+/*▶を表示*/
+.btn-wrap .tool-btn::before{
+    content:"";
+    /*枠を実線に*/
+    border-style: solid;
+    display: inline-block;
+    /*三角形を作る（上 右 下 左）*/
+    border-width: 7px 0px 7px 10px;
+    border-color: transparent transparent transparent #fff;
+    position: absolute;
+    top: 18px;
+    /*右から20pxの位置に*/
+    right: 20px;
+}
+
+.btn .tool-btn.is-inactive{
+    /*動作を無効化（押せなくなる、何も選択していないとき）*/
+    pointer-events: none;
+    background: #999;
+    border-color: #999;
+}
+
+.btn-wrap .tool-btn + .tool-btn{
+    margin-top: 15px;
+}
+
+/*is-inactiveを付けると完全に消せるように*/
+.box-wrap.is-inactive{
+    display: none;
+}
+
+@media screen and (max-width:761px){
+    /*マウスを乗せたとき色を反転する*/
+    .btn-wrap button:hover{
+        background: #fff;
+        color: #009999;
+        transition: 0.2s ease-in-out;
+    }
+    .btn-wrap button:hover::before{
+        border-color: transparent transparent transparent #009999;
+    }
+}
+
+@media screen and(max-width:761px){
+    .btn-wrap{
+        margin-top: 40px;
+    }
+    .btn-wrap .tool-btn{
+        font-size: 16px;
+        max-width: 320px;
+        padding: 10px;
+    }
+    /*三角形の大きさを調整*/
+    .btn-wrap .tool-btn::before{
+        border-width: 5px 0 5px 8px;
+        top: 16px;
+    }
+}
+
+/*クローズボタン*/
+.close-btn{
+    color: #999;
+    display: block;
+    font-weight: bold;
+    border-radius: 100px;
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(100, 100, 100, 0.1),
+    -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0);
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    /*マウスを乗せたら指マークにする*/
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 20px;
+}
+
+.close-btn::after{
+    /*親要素と同じく角を丸く*/
+    border-radius: 100px;
+    content: "";
+    display: block;
+    /*親要素と同じ高さ*/
+    height: 100%;
+    width: 100%;
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(0, 0, 0, 0.2)inset,
+    -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0)inset;
+    transition: all .2s ease-in-out;
+    /*透明にして最初は影が見えないように*/
+    opacity: 0;
+    /*親要素を基準に*/
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.close-btn .mark{
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+@media screen and(min-width:761px){
+    .close-btn:hover{
+        box-shadow: none;
+    }
+    /*ホバーされたら影が見えるように*/
+    .colose-btn:hover::after{
+        opacity: 1;
+    }
+}
+
+@media screen and(max-width:761px){
+    .close-btn{
+        font-size: 12px;
+        padding: 5px 14px;
+    }
+}
+
+/*ボタン全体に*/
+botton{
+    /*カーソルが乗ったら手のひらに*/
+    cursor: pointer;
+    font-family: "游ゴシック", "Hiragino Kaku Gothic Pro","メイリオ",
+    sans-selif !important;
+
+}

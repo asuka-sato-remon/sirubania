@@ -1,0 +1,376 @@
+<html>
+<head>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+  <title>シルバニア診断</title>
+  <link href="style.css" rel="stylesheet" media="all">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="YesNojQuery.js"></script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="title-wrap">
+            <div class="title-wrap">
+                <div class="inner-block">
+                    <h1 class="title">
+                        シルバニア診断
+                    </h1>
+                </div>
+            </div>
+            <div class="select-wrap">
+                <div class="innner-block">
+                    <div class="btn-wrap">
+                        <button type="button" class="tool-btn start-btn" data-box-link="question1">診断スタート</button>
+                        <!--data属性はどこに移動するかを指定する。data-box-linkにquestion1のデータが代入された-->
+                    </div>
+                    <div class="box-wrap">
+                        <!--質問内容１-->
+                        <div id="question1" class="box">
+                            <span class="close-btn">
+                                <span class="mark"></span> <!--ボタンの装飾-->
+                            </span>
+                            <h2 class="title">
+                                <span class="num">Q1.</span>
+                                あなたはアウトドアな方ですか？インドアな方ですか？<span class="small">(1つだけ選択)</span>
+                            </h2>
+                            <div class="select-wrap">
+                                <button type="button" class="select yes">インドア</button>
+                                <button type="button" class="select no">アウトドア</button>
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" data-box-link="Q2" class="tool-btn next is-active">次の質問へ</button>  
+                            </div>
+                        </div>
+
+                        <!--質問内容２-->
+                        <div id="question2" class="box">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                <span class="num">Q2.</span>
+                                あなたはアイデアマンですか？よく考える方ですか？<span class="small">(1つだけ選択)</span>
+                            </h2>
+                            <div class="select-wrap">
+                                <button type="button" class="select yes">アイデアマン</button>
+                                <button type="button" class="select no">よく考える</button>
+                            </div>
+                            <div class="btn=wrap">
+                                <button type="button" data-box-link="Q3" class="tool-btn next is-active">次の質問へ</button>  
+                            </div>
+                        </div>
+
+                        <!--質問内容３-->
+                        <div id="question3" class="box">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                <span class="num">Q3.</span>
+                                あなたは料理が好きですか？自然が好きですか？<span class="small">(1つだけ選択)</span>
+                            </h2>
+                            <div class="select-wrap">
+                                <button type="button" class="select yes">料理</button>
+                                <button type="button" class="select no">自然</button>
+                            </div>
+                            <div class="btn=wrap">
+                                <button type="button" data-box-link="Q4" class="tool-btn next is-active">次の質問へ</button>  
+                            </div>
+                        </div>
+
+                        <!--質問内容４-->
+                        <div id="question4" class="box">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                <span class="num">Q4.</span>
+                                あなたは現実的ですか？夢見がちですか？<span class="small">(1つだけ選択)</span>
+                            </h2>
+                            <div class="select-wrap">
+                                <button type="button" class="select yes">現実的</button>
+                                <button type="button" class="select no">夢見がち</button>
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn next is-active">診断結果へ</button>  
+                            </div>
+                        </div>
+
+
+                        <!--A1 診断結果1-->
+                        <div id="answer1" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name">マシュマロネズミのお母さん </span>に似ています
+                            </h2>
+                            <p class="txt">
+                                元気いっぱいでお料理上手。村のお母さんたちにレシピが評判。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=1641-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A2 診断結果2-->
+                        <div id="answer2" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name">ラッコのお母さん マイラ・コーブ </span>に似ています
+                            </h2>
+                            <p class="txt">
+                                貝料理が好き。ちょっとせっかちだけど、のんびりしているお父さんのコリンといいコンビ。
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A3 診断結果3-->
+                        <div id="answer3" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name">ユキヒョウの夫婦 ジェラルド＆ホープ </span>に似ています
+                            </h2>
+                            <p class="txt">
+                                キャンプや山登りが大好きな二人。よく似た心配性の性格で、子供たちから目が離せない。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=2533-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A4 診断結果4-->
+                        <div id="answer4" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name">シナモンウサギのお兄さん </span>に似ています
+                            </h2>
+                            <p class="txt">
+                                ショコラウサギのお姉さんとお付き合いをしている。優しいロマンチストで、お姉さんにあげるためにバラを育てたことも。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=1695-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A5 診断結果5-->
+                        <div id="answer5" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name">ラテネコの女の子 モニカ </span>に似ています
+                            </h2>
+                            <p class="txt">
+                                食べることが大好きで、グルメ日記帳を付けている。おしゃれで家族思いの優しい女の子。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=2420-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A6 診断結果6-->
+                        <div id="answer6" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name">ショコラウサギの女の子 フレア </span>に似ています
+                            </h2>
+                            <p class="txt">
+                                好奇心旺盛なやさしい女の子。森のみんなと色んなところに出かけては、スケッチブックに絵を残している。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=2329-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A7 診断結果7-->
+                        <div id="answer7" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> くるみリスの男の子 ラルフ・ウォーナット </span>に似ています
+                            </h2>
+                            <p class="txt">
+                                天気のいい日は一日中、野原や森をかけまわる元気な男の子。意外と照れ屋な一面も。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=1010-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A8 診断結果8-->
+                        <div id="answer8" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> シカの女の子 ソフィア・ウィロー </span>に似ています
+                            </h2>
+                            <p class="txt">
+                                家族とよく森をお散歩する。お花畑で詩や空想のお話を考えるのが大好き。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=2485-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A9 診断結果9-->
+                        <div id="answer9" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> メイプルネコのお母さん ジョージーナ・メイプル</span>に似ています
+                            </h2>
+                            <p class="txt">
+                                大評判のジェラートショップの店長。アイディアマンで村のみんなから頼られることも多い。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=1479-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A10 診断結果10-->
+                        <div id="answer10" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> ビスケットクマの男の子 テオ・ビスケット</span>に似ています
+                            </h2>
+                            <p class="txt">
+                                控え目な性格で、料理が大好き。妹のモリーとなかよしで、自分が主人公のお話を書いてもらう。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=2572-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A11 診断結果11-->
+                        <div id="answer11" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> ペルシャ猫の女の子 ライラ・ペルシアン</span>に似ています
+                            </h2>
+                            <p class="txt">
+                                機械いじりが好きで、おとなしい性格の女の子。双子のお姉ちゃんにはよくしゃべる。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=1771-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+                        
+                        <!--A12 診断結果12-->
+                        <div id="answer12" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> ショコラウサギのおじいさん リース・チョコレート</span>に似ています
+                            </h2>
+                            <p class="txt">
+                                海の近くのおうちに住むおしどり夫婦。クルーズボートの船長さんで、孫たちに色んな景色を見せてあげたい。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=1027-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A13 診断結果13-->
+                        <div id="answer13" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> ショコラウサギのお父さん フレイジャー・チョコレート</span>に似ています
+                            </h2>
+                            <p class="txt">
+                                パンを焼くことが趣味。村の子供たちはおやつにパンをもらいながら、いろいろ話を聞いてもらっている。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=2332-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A14 診断結果14-->
+                        <div id="answer14" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> トイプードルのお姉さん ローラ・ケーキブレッド</span>に似ています
+                            </h2>
+                            <p class="txt">
+                                お仕事はショコラティエ。宝石のようなチョコレートで街のみんなを笑顔にしたい。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=1493-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A14 診断結果15-->
+                        <div id="answer15" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> ペルシャネコのお母さん ダーン・ペルシアン</span>に似ています
+                            </h2>
+                            <p class="txt">
+                                医者でもありアクセサリーデザイナーでもある多才な母。星と宇宙について研究することが趣味。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/catalog/characters/details/018/-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                        <!--A14 診断結果16-->
+                        <div id="answer16" class="box result">
+                            <span class="close-btn">
+                                <span class="mark"></span>
+                            </span>
+                            <h2 class="title">
+                                あなたは、<span class="character-name"> みるくウサギの女の子 レベッカ・ペリーウィンクル</span>に似ています
+                            </h2>
+                            <p class="txt">
+                                おひめさまごっこが好きで、いつもロマンチックな空想をしている。
+                                <!--https://www.sylvanianfamilies.com/ja-jp/play/?story_id=2320-->
+                            </p>
+                            <div class="btn-wrap">
+                                <button type="button" class="tool-btn finish">診断終了</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
