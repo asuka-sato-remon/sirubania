@@ -16,13 +16,16 @@ $(function (){
         var target = $(this).data('box-link');
         //jQuery で $('#id名') と書くと、HTML の ID 属性を持つ要素を取得 できる。
         var box = $('#' + target);
+
+        //診断スタートを非表示に
+
+        $(this).addClass('is-inactive');
+
         //parentはboxの親要素を取得。is-inactiveを追加することで現在のboxを非表示にする。
         //次の質問に行くため。
-        $(box).parent().addClass('is-inactive');
+        $(this).closest('.box').addClass('is-inactive');
         //ふわっと段階的に次のボックスを表示させる。
-        $(box).fadeIn();
-        //this(クリックされたボタン)も非表示にする。
-        $(this).parent().addClass('is-inactive');
+        $(box).removeClass('is-inactive').fadeIn();
     });
 
     //「次の質問へ」がクリックされたら
@@ -32,6 +35,10 @@ $(function (){
         $(this).parents('.box').fadeOut(1200);
         //.boxにis-active（非表示）クラスがなかったら付ける。fadeoutだけでもいいけどcssで細かく制御できる。
         $(this).parents('.box').toggleClass('is-inactive');
+
+        //次のボックスを表示
+        var nextBox=$(this).parents('.box').next('.box');
+        nextBox.removeClass('is-inactive').fadeIn();
     });
 
     //選択肢がクリックされたら
@@ -64,21 +71,24 @@ $(function (){
 
     //診断結果の出しわけ
     //tool-btnがクリックされたら
-    $('.tool-btn.result').on('click', function(){
+    $('.tool-btn.next.is-active').on('click', function(){
+        console.log("診断結果ボタンがクリックされました")
 
         //診断結果を計算
         /*
         $('#question1 .select.yes')は1つ目の質問のyesボタン
         hasClass('is-inactive')はこのボタンにis-inactiveがついているか？
-        is-inactiveがついていたら1、ついていなかったら0（yesが選ばれている）
+        is-inactiveがついていたら0、ついていなかったら1（yesが選ばれている）
         */
-        var question1 = $('#question1 .select.yes').hasClass('is-inactive') ? 1 : 0;
-        var question2 = $('#question2 .select.yes').hasClass('is-inactive') ? 1 : 0;
-        var question3 = $('#question3 .select.yes').hasClass('is-inactive') ? 1 : 0;
-        var question4 = $('#question4 .select.yes').hasClass('is-inactive') ? 1 : 0;
+        var question1 = $('#question1 .select.yes').hasClass('is-inactive') ? 0 : 1;
+        var question2 = $('#question2 .select.yes').hasClass('is-inactive') ? 0 : 1;
+        var question3 = $('#question3 .select.yes').hasClass('is-inactive') ? 0 : 1;
+        var question4 = $('#question4 .select.yes').hasClass('is-inactive') ? 0 : 1;
 
         //組み合わせを16通りの数字（0～15に変換）。2進数を10進数に変える。
         var resultIndex = (question1 * 8) + (question2 * 4) + (question3 * 2) + (question4 * 1);
+        /*診断結果を表示*/
+        console.log(resultIndex);
         $('#answer' + (resultIndex + 1)).fadeIn();
     });
 
