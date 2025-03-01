@@ -71,8 +71,7 @@ $(function (){
 
     //診断結果の出しわけ
     //tool-btnがクリックされたら
-    $('.tool-btn.next.is-active').on('click', function(){
-        console.log("診断結果ボタンがクリックされました")
+    $('.tool-btn.result').on('click', function(){
 
         //診断結果を計算
         /*
@@ -88,7 +87,6 @@ $(function (){
         //組み合わせを16通りの数字（0～15に変換）。2進数を10進数に変える。
         var resultIndex = (question1 * 8) + (question2 * 4) + (question3 * 2) + (question4 * 1);
         /*診断結果を表示*/
-        console.log(resultIndex);
         $('#answer' + (resultIndex + 1)).fadeIn();
     });
 
