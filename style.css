@@ -2,7 +2,7 @@
 body{
     position: relative;
     margin: 0;
-    background: #f4f4f4;
+    background: #fff;
 }
 
 /*すべての要素にスタイルを適用*/
@@ -16,7 +16,6 @@ html{
     color: #333;
     font-family: "游ゴシック", "Hiragino Kaku Gothic Pro","メイリオ",
     sans-selif !important;
-
 }
 
 h1, h2, h3, h4, h5{
@@ -53,7 +52,7 @@ img{
 }
 
 /*画像が761px以下の時（スマホ向け）*/
-@media screen and(max-width:761px){
+@media screen and (max-width:761px){
     /*pc向けを非表示*/
     .pc{
         display: none;
@@ -72,11 +71,12 @@ img{
 }
 
 .wrap{
-    display: flex;
-    /* いっぱいになったら折り返す*/
-    flex-wrap: wrap;
-    /*要素を縦並びに(通常は横)*/
-    flex-direction: column;
+    background-image: url('レースライン.jpg'); 
+    background-repeat: repeat-x; /* 画像を繰り返さない */
+    background-position: top center; /* 上中央に配置 */
+    background-size: contain; /* 高さを100pxに統一、幅は自動 */
+    height: 100px; /* 高さを固定 */
+    width: 100%; /* 画面の幅いっぱい */
 }
 
 
@@ -85,7 +85,13 @@ img{
     text-align: center;
 }
 
-@media screen and(max-width:761px){
+h1.title {
+    font-size: 40px;
+    text-align: center;
+    padding-top: 80px; /* 好きな値に調整 */
+}
+
+@media screen and (max-width:761px){
     .title-wrap .title{
         font-size: 24px;
     }
@@ -113,14 +119,10 @@ img{
 }
 
 .box-wrap .box{
-    background-color: #f4f4f4;
+    background-color: #fff;
     /*灰色の影
     box-shadow: 水平　垂直　ぼかしの半径　広がりの半径 色*/
-    box-shadow: 2.8285px 2.8285px 5px 0px
-    rgba(100, 100, 100, 0.1)inset,/*insetは内側に影*/
-    /*白色の影*/
-    -2.8285px -2.8285px 5px 0px
-    rgba(255, 255, 255, 1.0)inset;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
     /*角を丸く*/
     border-radius: 20px;
     padding: 80px 50px;
@@ -134,6 +136,7 @@ img{
     width: 100%;
     /*はじめは表示しない*/
     display: none;
+
 }
 
 /*好きな位置に置けるようにする*/
@@ -147,12 +150,13 @@ img{
 }
 
 .box-wrap .box .text{
+    color:#333;
     text-align: center;
     font-size: 18px;
 }
 
 /*余白調整*/
-@media screen and(max-width:761px){
+@media screen and (max-width:761px){
     .box-wrap .box{
         padding: 60px 30px 40px;
     }
@@ -199,14 +203,16 @@ img{
 
 /*料理か自然か*/
 .box-wrap .box .select-wrap{
+
     /*横並び*/
     display: flex;
     /*折り返し*/
     flex-wrap: wrap;
     /*上下を中央に*/
-    align-items: center;
+    align-items: flex-start;
     /*左右を中央に*/
     justify-content: center;
+    margin-top: 10px;
 }
 
 .box-wrap .box .select-wrap .select{
@@ -334,6 +340,10 @@ img{
 /*次の質問へ*/
 .btn-wrap{
     margin-top: 70px;
+    margin-bottom: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .btn-wrap .tool-btn{
     background: #009999;
@@ -357,6 +367,7 @@ img{
     transition: 0.2s ease-in-out;
     /*400pxまで*/
     width: 100%;
+    margin-bottom: 50px;
 }
 
 /*▶を表示*/
@@ -424,8 +435,9 @@ img{
     display: block;
     font-weight: bold;
     border-radius: 100px;
-    box-shadow: 2.8285px 2.8285px 5px 0px rgba(100, 100, 100, 0.1),
-    -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0);
+    box-shadow: 
+        3px 3px 6px rgba(100, 100, 100, 0.2),
+        -3px -3px 6px rgba(255, 255, 255, 1.0);
     position: absolute;
     top: 25px;
     right: 25px;
@@ -485,4 +497,51 @@ botton{
     font-family: "游ゴシック", "Hiragino Kaku Gothic Pro","メイリオ",
     sans-selif !important;
 
+}
+
+.character-img {
+    display: block;  
+    margin: 10px auto;  /* 上下10px、左右は自動で中央寄せ */
+    width: 80%;  /* 画像の幅を親要素の80%に */
+    max-width: 300px;  /* 最大300pxまで */
+}
+
+.story-link {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.story-link a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 40px 10px 20px;
+    background-color: #f4a261;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    /*三角形を作る（上 右 下 左）*/
+}
+
+.story-link a::before {
+    content: "";
+    border-style: solid;
+    display: inline-block;
+    border-width: 7px 0px 7px 10px; /* ▶ を作る */
+    border-color: transparent transparent transparent #fff;
+    position: absolute;
+    top: 50%;  /* ボタンの中央に配置 */
+    transform: translateY(-50%);  /* 真ん中に調整 */
+    right: 20px; /* 右端からの位置 */
+}
+
+.box.result .txt{
+    color: #222;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-block;
+    border-bottom: 3px solid #ffcc00;
+    padding-bottom: 3px;
 }
