@@ -11,7 +11,7 @@
 //スタートボタンは最初の画面を完全に消すから処理がわけられている。
 $(function (){
     //診断スタート（tool-btn）を押したら{}内の処理を実行
-    $('.tool-btn').on('click', function (){
+    $('.start-btn').on('click', function (){
         //this(クリックされたボタン)のbox-linkを取得
         var target = $(this).data('box-link');
         //jQuery で $('#id名') と書くと、HTML の ID 属性を持つ要素を取得 できる。
@@ -28,9 +28,22 @@ $(function (){
         $(box).removeClass('is-inactive').fadeIn();
     });
 
+    $(function () {
+        // 診断スタートを押したらタイトル画像を非表示にする
+        $('.start-btn').on('click', function () {
+            $('.title-img').fadeOut();
+        });
+    
+        // 診断終了ボタンを押したらタイトル画像を再表示
+        $('.finish-btn, .close-btn').on('click', function () {
+            $('.title-img').fadeIn();
+        });
+    });
+    
+
     //「次の質問へ」がクリックされたら
     //.box(クラス名でありvar boxではない)の中にある.tool-btnがクリックされたら処理を実行する。
-    $('.box .tool-btn').on('click', function(){
+    $('.next-btn').on('click', function(){
         //parentsでクリックされたボタンの親要素.boxを取得、1.2秒かけてfadeout
         $(this).parents('.box').fadeOut(1200);
         //.boxにis-active（非表示）クラスがなかったら付ける。fadeoutだけでもいいけどcssで細かく制御できる。
@@ -71,7 +84,10 @@ $(function (){
 
     //診断結果の出しわけ
     //tool-btnがクリックされたら
-    $('.tool-btn.result').on('click', function(){
+    $('.result-btn').on('click', function(){
+        console.log("診断結果ボタンがクリックされました");
+
+        $('#question4').fadeOut(500).addClass('is-inactive');
 
         //診断結果を計算
         /*
@@ -87,12 +103,13 @@ $(function (){
         //組み合わせを16通りの数字（0～15に変換）。2進数を10進数に変える。
         var resultIndex = (question1 * 8) + (question2 * 4) + (question3 * 2) + (question4 * 1);
         /*診断結果を表示*/
+        console.log(resultIndex);
         $('#answer' + (resultIndex + 1)).fadeIn();
     });
 
     //診断を閉じる
     //closeボタン（閉じるボタン）とtool-btn.finishをクリックしたとき
-    $('.close-btn, .tool-btn.finish').on('click', function(){
+    $('.close-btn, .finish-btn').on('click', function(){
         //boxクラスを持つ要素を非表示に（素早く）
         $('.box').fadeOut("fast");
         //再表示できるようにいろいろ消しとく
