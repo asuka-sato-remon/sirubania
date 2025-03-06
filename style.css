@@ -552,7 +552,3 @@ botton{
     border-bottom: 3px solid #ffcc00;
     padding-bottom: 3px;
 }
-
-.is-inactive {
-    display: none !important;
-}
