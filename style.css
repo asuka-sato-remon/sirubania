@@ -5,6 +5,32 @@ body{
     background: #fff;
 }
 
+#device-warning {
+    display: none; /* デフォルトでは非表示 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+@media screen and (max-width: 768px) {
+    #device-warning {
+        display: flex; /* スマホでのみ表示 */
+    }
+    .wrap {
+        display: none; /* シルバニア診断の内容を非表示 */
+    }
+}
+
 /*すべての要素にスタイルを適用*/
 *, 
 /*疑似要素（要素の前後に追加）*/
