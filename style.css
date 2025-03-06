@@ -155,6 +155,13 @@ h1.title {
     font-size: 18px;
 }
 
+/* スマホサイズの画面では .box を非表示にする */
+@media screen and (max-width: 761px) {
+    .box-wrap .box {
+        display: none;
+    }
+}
+
 /*余白調整*/
 @media screen and (max-width:761px){
     .box-wrap .box{
