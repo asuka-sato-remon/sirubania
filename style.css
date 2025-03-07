@@ -22,6 +22,25 @@ body{
     z-index: 9999;
 }
 
+#bubble-message {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    max-width: 300px;
+    text-align: center;
+}
+
+#bubble-img {
+    width: 50px; /* 吹き出しの画像サイズ */
+    margin-bottom: 10px;
+}
+
 @media screen and (max-width: 768px) {
     #device-warning {
         display: flex; /* スマホでのみ表示 */
