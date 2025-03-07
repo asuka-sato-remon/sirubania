@@ -8,6 +8,19 @@
 
 //parentsは指定した要素の親を探す
 
+$(document).ready(function () {
+    function checkDeviceWidth() {
+        if (window.innerWidth <= 768) {
+            $('#device-warning').show(); // スマホなら警告を表示
+        } else {
+            $('#device-warning').hide(); // PCなら警告を非表示
+        }
+    }
+
+    checkDeviceWidth(); // 最初にチェック
+    $(window).resize(checkDeviceWidth); // リサイズ時に再チェック
+});
+
 //スタートボタンは最初の画面を完全に消すから処理がわけられている。
 $(function (){
     //診断スタート（tool-btn）を押したら{}内の処理を実行
