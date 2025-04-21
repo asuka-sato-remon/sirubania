@@ -115,14 +115,6 @@ img{
     }
 }
 
-.wrap{
-    background-repeat: repeat-x; /* 画像を繰り返さない */
-    background-position: top center; /* 上中央に配置 */
-    background-size: contain; /* 高さを100pxに統一、幅は自動 */
-    height: 100px; /* 高さを固定 */
-    width: 100%; /* 画面の幅いっぱい */
-}
-
 
 .title-wrap .title{
     font-size: 40px;
