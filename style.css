@@ -116,7 +116,6 @@ img{
 }
 
 .wrap{
-    background-image: url('レースライン.jpg'); 
     background-repeat: repeat-x; /* 画像を繰り返さない */
     background-position: top center; /* 上中央に配置 */
     background-size: contain; /* 高さを100pxに統一、幅は自動 */
