@@ -1,134 +1,603 @@
-/*
-1.診断スタートで一番最初の質問内容を呼び出す
-2.「次の質問へ」で次の質問内容を呼び出す
-3.選択肢を選択したとき
-4.「診断結果へ」を押したら診断結果を呼び出す
-5.「診断終了」でやめる
-*/
+/*relativeは相対位置、absoluteは絶対位置*/
+body{
+    position: relative;
+    margin: 0;
+    background: #fff;
+}
 
-//parentsは指定した要素の親を探す
+#device-warning {
+    display: none; /* デフォルトでは非表示 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
 
-$(document).ready(function () {
-    function checkDeviceWidth() {
-        if (window.innerWidth <= 768) {
-            $('#device-warning').show(); // スマホなら警告を表示
-        } else {
-            $('#device-warning').hide(); // PCなら警告を非表示
-        }
+#bubble-message {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    max-width: 300px;
+    text-align: center;
+}
+
+#bubble-img {
+    width: 50px; /* 吹き出しの画像サイズ */
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    #device-warning {
+        display: flex; /* スマホでのみ表示 */
+    }
+    .wrap {
+        display: none; /* シルバニア診断の内容を非表示 */
+    }
+}
+
+/*すべての要素にスタイルを適用*/
+*, 
+/*疑似要素（要素の前後に追加）*/
+*::before, *::after{
+    box-sizing: border-box; 
+}
+
+html{
+    color: #333;
+    font-family: "游ゴシック", "Hiragino Kaku Gothic Pro","メイリオ",
+    sans-selif !important;
+}
+
+h1, h2, h3, h4, h5{
+    margin: 0;
+    padding: 0;
+}
+
+img{
+    /*画像の幅が親要素を超えないように*/
+    max-width: 100%;
+    margin: 0;
+    /*枠線なし*/
+    border: 0;
+    /*画像の行内の位置を上にそろえる*/
+    vertical-align: top;
+}
+
+.pc{
+    display: block; /*通常表示*/
+}
+
+/*pc向けのときスマホは非表示*/
+.sp{
+    display: none;
+}
+
+.innner-block{
+    width: 1200px;
+    /*左右の余白を均等にして中央寄せ*/
+    margin: auto;
+    /*左右に20pxの余白*/
+    padding: 0 20px;
+    position: relative;
+}
+
+/*画像が761px以下の時（スマホ向け）*/
+@media screen and (max-width:761px){
+    /*pc向けを非表示*/
+    .pc{
+        display: none;
+    }
+    .sp{
+        display: block;
+    }
+    /*横並びにする。ibが何かわからなかった*/
+    .ib{
+        display: inline-block;
+    }
+    .innner-block{
+        padding: 0 15px;
+        width: 100%;
+    }
+}
+
+
+.title-wrap .title{
+    font-size: 40px;
+    text-align: center;
+}
+
+h1.title {
+    font-size: 40px;
+    text-align: center;
+    padding-top: 80px; /* 好きな値に調整 */
+}
+
+@media screen and (max-width:761px){
+    .title-wrap .title{
+        font-size: 24px;
+    }
+    /*幅いっぱいに*/
+    .diagnose-wrap{
+        width: 100%;
+    }
+}
+
+/*ボックス（四角）*/
+.box-wrap{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    margin-top: 50px;
+}
+
+.box-wrap.is-inactive{
+    position: relative;
+}
+
+.box-wrap.box-wrap.is-inactive .box{
+    position: relative;
+}
+
+.box-wrap .box{
+    background-color: #fff;
+    /*灰色の影
+    box-shadow: 水平　垂直　ぼかしの半径　広がりの半径 色*/
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    /*角を丸く*/
+    border-radius: 20px;
+    padding: 80px 50px;
+    position: absolute;
+    /*中央に配置*/
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    /*はじめは表示しない*/
+    display: none;
+
+}
+
+/*好きな位置に置けるようにする*/
+.box-wrap .box-wrap.is-inactive{
+    position: absolute;
+}
+
+/*診断結果のタイトルに色*/
+.box-wrap .box.result .title{
+    color: #009999;
+}
+
+.box-wrap .box .text{
+    color:#333;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* スマホサイズの画面では .box を非表示にする */
+@media screen and (max-width: 761px) {
+    .box-wrap .box {
+        display: none;
+    }
+}
+
+/*余白調整*/
+@media screen and (max-width:761px){
+    .box-wrap .box{
+        padding: 60px 30px 40px;
+    }
+}
+
+/*選択肢*/
+/*選択肢のタイトル*/
+.box-wrap .box .title{
+    font-size: 26px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 50px;
+}
+
+/*タイトルの下に横線を表示
+ 下線はbeforeでもafterでも可だが、タイトルの一部として扱いたい場合はbefore*/
+.box-wrap .box .title::before{
+    background: #999;
+    /*空文字をセット*/
+    content: "";
+    /*ブロック要素にしてサイズ指定*/
+    display: block;
+    height: 2px;
+    width: 60px;
+    position: absolute;
+    /*absoluteを使うと親要素(title)を基準に自由に配置できる。bottomを指定すると親要素の下端に行く*/
+    bottom: 0;
+    right: 0;
+    left: 0;
+    /*中央に*/
+    margin: auto;
+}
+
+/*numはクエスチョンナンバー*/
+.box-wrap .box .title .num{
+    font-size: 30px;
+}
+
+/*1つだけ選択*/
+.box-wrap .box .title .small{
+    font-size: 20px;
+}
+
+/*料理か自然か*/
+.box-wrap .box .select-wrap{
+
+    /*横並び*/
+    display: flex;
+    /*折り返し*/
+    flex-wrap: wrap;
+    /*上下を中央に*/
+    align-items: flex-start;
+    /*左右を中央に*/
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.box-wrap .box .select-wrap .select{
+    /*下側のグレーの影(2.8285pxずつ右下に移動)*/
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(100,100,100,0.1),
+    /*上側のホワイトの影(-2.8285pxずつ左上に移動)*/
+    -2.8285px -2.8285px 5px 0px rgba(255,255,255,1.0);
+    /*角を丸く*/
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    /*内側の余白*/
+    padding: 20px;
+    text-decoration: none;
+    text-align: center;
+    /*::afterで使う*/
+    position: relative;
+    /*親の幅から40pxを引いたものを2等分してボタンを並べる*/
+    width: calc((100% - 40px)/2);
+}
+
+/*ボタンがクリックされたとき*/
+.box-wrap .box .select-wrap .select::after{
+    /*角を丸く*/
+    border-radius: 50px;
+    content:"";
+    /*要素をブロック要素に*/
+    display: block;
+    /*ボタン全体を覆うエフェクト*/
+    height: 100%;
+    width: 100%;
+    /*押されたような影をつくる*/
+    box-shadow: 2.8285px  2.8285px 5px 0px rgba(0, 0, 0, 0.2)inset,
+    -2.8285px  -2.8285px 5px 0px rgba(255, 255, 255, 1.0)inset;
+    /*滑らかに変化させる(0.2秒かけて)*/
+    transition: all .2s ease-in-out;
+    /*最初は何もなかったことに*/
+    opacity: 0;
+    /*ぴったり重なるように*/
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/*非アクティブ（押せない状態）になったとき*/
+.box-wrap .box .select-wrap .select.is-inactive{
+    /*押された状態の形にする*/
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(0, 0, 0, 0.2) inset,
+    -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0) inset;
+}
+
+/*yesの選択肢を赤に*/
+.box-wrap .box .select-wrap .select.yes{
+    color: #ff6666;
+}
+
+/*noの選択肢を青に*/
+.box-wrap .box .select-wrap .select.no{
+    color: #33cccc;
+}
+
+/*pcやタブレットの時*/
+@media screen and(min-width:761px){
+    /*マウスを乗せたとき*/
+    .box-wrap .box .select-wrap .select:hover{
+        box-shadow: none;
+    }
+    /*さっきの疑似要素を押されたら表示*/
+    .box-wrap .box .select-wrap .select:hover::after{
+        opacity: 1;
+    }
+    /*押したボタンに影を付ける*/
+    .box-wrap .box .select-wrap .select.is-inactive:hover{
+        box-shadow: 2.8285px 2.8285px 5px 0px rgba(0, 0, 0, 0.2) inset,
+        -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0) inset;
+    }
+    .box-wrap .box .select-wrap .select.is-inactive:hover::after {
+        opacity: 0;
     }
 
-    checkDeviceWidth(); // 最初にチェック
-    $(window).resize(checkDeviceWidth); // リサイズ時に再チェック
-});
+    .box-wrap .box .select-wrap .select + .select{
+        margin-left: 20px;
+    }
+}
 
-//スタートボタンは最初の画面を完全に消すから処理がわけられている。
-$(function (){
-    //診断スタート（tool-btn）を押したら{}内の処理を実行
-    $('.start-btn').on('click', function (){
-        //this(クリックされたボタン)のbox-linkを取得
-        var target = $(this).data('box-link');
-        //jQuery で $('#id名') と書くと、HTML の ID 属性を持つ要素を取得 できる。
-        var box = $('#' + target);
+@media screen and(max-width:761px){
+    .box-wrap .box .title{
+        font-size: 20px;
+        text-align: center;
+        position: relative;
+        /*paddingは内側の余白*/
+        padding-bottom: 20px;
+        /*marginは外側の余白*/
+        margin-bottom: 30px;
+    }
+    /*タイトル下の下線*/
+    .box-wrap .box .title::before{
+        width: 40px;
+    }
+    /*クエスチョンナンバー*/
+    .box-wrap .box .title .num{
+        font-size: 24px;
+        display: block;
+    }
+    /*ひとつだけ選択*/
+    .box-wrap .box .title .small{
+        display: block;
+        font-size: 14px;
+    }
+    /*選択肢を縦に並べる*/
+    .box-wrap .box .select-wrap{
+        flex-direction: column;
+    }
+    /*選択ボックス*/
+    .box-wrap .box .select-wrap .select{
+        padding: 12px;
+        width: 100%;
+    }
+    /*間隔をあける(2つ目以降のselectに適応)*/
+    .box-wrap .box .select-wrap .select + .select{
+        margin-top: 20px;
+    }
+}
 
-        //診断スタートを非表示に
+/*次の質問へ*/
+.btn-wrap{
+    margin-top: 70px;
+    margin-bottom: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-wrap .tool-btn{
+    background: #009999;
+    border: 2px solid #009999;
+    border-radius: 50px;
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(100, 100, 100, 0.1),
+    -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0);
+    color: #fff;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    /*ボタンの最大幅*/
+    max-width: 400px;
+    /*中央に*/
+    margin: auto;
+    text-align: center;
+    /*下線なし*/
+    text-decoration: none;
+    padding: 13px 20px 12px;
+    position: relative;
+    transition: 0.2s ease-in-out;
+    /*400pxまで*/
+    width: 100%;
+    margin-bottom: 50px;
+}
 
-        $(this).addClass('is-inactive');
+/*▶を表示*/
+.btn-wrap .tool-btn::before{
+    content:"";
+    /*枠を実線に*/
+    border-style: solid;
+    display: inline-block;
+    /*三角形を作る（上 右 下 左）*/
+    border-width: 7px 0px 7px 10px;
+    border-color: transparent transparent transparent #fff;
+    position: absolute;
+    top: 18px;
+    /*右から20pxの位置に*/
+    right: 20px;
+}
 
-        //parentはboxの親要素を取得。is-inactiveを追加することで現在のboxを非表示にする。
-        //次の質問に行くため。
-        $(this).closest('.box').addClass('is-inactive');
-        //ふわっと段階的に次のボックスを表示させる。
-        $(box).removeClass('is-inactive').fadeIn();
-    });
+.btn .tool-btn.is-inactive{
+    /*動作を無効化（押せなくなる、何も選択していないとき）*/
+    pointer-events: none;
+    background: #999;
+    border-color: #999;
+}
 
-    $(function () {
-        // 診断スタートを押したらタイトル画像を非表示にする
-        $('.start-btn').on('click', function () {
-            $('.title-img').fadeOut();
-        });
-    
-        // 診断終了ボタンを押したらタイトル画像を再表示
-        $('.finish-btn, .close-btn').on('click', function () {
-            $('.title-img').fadeIn();
-        });
-    });
-    
+.btn-wrap .tool-btn + .tool-btn{
+    margin-top: 15px;
+}
 
-    //「次の質問へ」がクリックされたら
-    //.box(クラス名でありvar boxではない)の中にある.tool-btnがクリックされたら処理を実行する。
-    $('.next-btn').on('click', function(){
-        //parentsでクリックされたボタンの親要素.boxを取得、1.2秒かけてfadeout
-        $(this).parents('.box').fadeOut(1200);
-        //.boxにis-active（非表示）クラスがなかったら付ける。fadeoutだけでもいいけどcssで細かく制御できる。
-        $(this).parents('.box').toggleClass('is-inactive');
+/*is-inactiveを付けると完全に消せるように*/
+.box-wrap.is-inactive{
+    display: none;
+}
 
-        //次のボックスを表示
-        var nextBox=$(this).parents('.box').next('.box');
-        nextBox.removeClass('is-inactive').fadeIn();
-    });
+@media screen and (max-width:761px){
+    /*マウスを乗せたとき色を反転する*/
+    .btn-wrap button:hover{
+        background: #fff;
+        color: #009999;
+        transition: 0.2s ease-in-out;
+    }
+    .btn-wrap button:hover::before{
+        border-color: transparent transparent transparent #009999;
+    }
+}
 
-    //選択肢がクリックされたら
-    //selectがクリックされたら実行する
-    $('.select').on('click', function (){
-        //this(クリックしたもの)にis-activeを追加/削除する。
-        $(this).toggleClass('is-inactive');
-        /*
-        siblings=.selectクラスを持っているものすべて。remove=取ってきたselectからis-activeを削除。
-        例「インドア」選択→thisがインドアボタンになる。siblings('.select')はアウトドアを取ってくる。
-        クリックしたボタンのis-inactive→1回クリックでON、もう1回クリックでOFF（選択解除）
-        ほかの選択肢のis-inactive→選択肢を1つだけ選べるようにする（選択解除）
-        */
-        $(this).siblings('.select').removeClass('is-inactive');
-        //boxまで遡り、boxクラスの中のselectをすべて探す→Yes/Noどっちも入る
-        var select = $(this).parents('.box').find('.select');
-        //toolボタンクラス（次の質問へ）を変数に格納
-        var toolBtn = $(this).parents('.box').find('.tool-btn.next');
+@media screen and(max-width:761px){
+    .btn-wrap{
+        margin-top: 40px;
+    }
+    .btn-wrap .tool-btn{
+        font-size: 16px;
+        max-width: 320px;
+        padding: 10px;
+    }
+    /*三角形の大きさを調整*/
+    .btn-wrap .tool-btn::before{
+        border-width: 5px 0 5px 8px;
+        top: 16px;
+    }
+}
 
-        //選択されていないとボタンをクリックできないようにする
-        //var selectにどれか一つでもis-inactiveクラスを持っているか選択する(あったらtrue)
-        if(select.hasClass('is-inactive')){
-            //var toolBtnのis-inactiveクラスを削除→ボタン表示
-            toolBtn.removeClass('is-inactive');
-        }else{
-            //どの選択肢にもis-inactiveがついていないなら、is-inactiveをつける→次の質問へ非表示
-            toolBtn.addClass('is-inactive');
-        }
-    });
+/*クローズボタン*/
+.close-btn{
+    color: #999;
+    display: block;
+    font-weight: bold;
+    border-radius: 100px;
+    box-shadow: 
+        3px 3px 6px rgba(100, 100, 100, 0.2),
+        -3px -3px 6px rgba(255, 255, 255, 1.0);
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    /*マウスを乗せたら指マークにする*/
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 20px;
+}
 
-    //診断結果の出しわけ
-    //tool-btnがクリックされたら
-    $('.result-btn').on('click', function(){
-        console.log("診断結果ボタンがクリックされました");
+.close-btn::after{
+    /*親要素と同じく角を丸く*/
+    border-radius: 100px;
+    content: "";
+    display: block;
+    /*親要素と同じ高さ*/
+    height: 100%;
+    width: 100%;
+    box-shadow: 2.8285px 2.8285px 5px 0px rgba(0, 0, 0, 0.2)inset,
+    -2.8285px -2.8285px 5px 0px rgba(255, 255, 255, 1.0)inset;
+    transition: all .2s ease-in-out;
+    /*透明にして最初は影が見えないように*/
+    opacity: 0;
+    /*親要素を基準に*/
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
-        $('#question4').fadeOut(500).addClass('is-inactive');
+.close-btn .mark{
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
 
-        //診断結果を計算
-        /*
-        $('#question1 .select.yes')は1つ目の質問のyesボタン
-        hasClass('is-inactive')はこのボタンにis-inactiveがついているか？
-        is-inactiveがついていたら0、ついていなかったら1（yesが選ばれている）
-        */
-        var question1 = $('#question1 .select.yes').hasClass('is-inactive') ? 0 : 1;
-        var question2 = $('#question2 .select.yes').hasClass('is-inactive') ? 0 : 1;
-        var question3 = $('#question3 .select.yes').hasClass('is-inactive') ? 0 : 1;
-        var question4 = $('#question4 .select.yes').hasClass('is-inactive') ? 0 : 1;
+@media screen and(min-width:761px){
+    .close-btn:hover{
+        box-shadow: none;
+    }
+    /*ホバーされたら影が見えるように*/
+    .colose-btn:hover::after{
+        opacity: 1;
+    }
+}
 
-        //組み合わせを16通りの数字（0～15に変換）。2進数を10進数に変える。
-        var resultIndex = (question1 * 8) + (question2 * 4) + (question3 * 2) + (question4 * 1);
-        /*診断結果を表示*/
-        console.log(resultIndex);
-        $('#answer' + (resultIndex + 1)).fadeIn();
-    });
+@media screen and(max-width:761px){
+    .close-btn{
+        font-size: 12px;
+        padding: 5px 14px;
+    }
+}
 
-    //診断を閉じる
-    //closeボタン（閉じるボタン）とtool-btn.finishをクリックしたとき
-    $('.close-btn, .finish-btn').on('click', function(){
-        //boxクラスを持つ要素を非表示に（素早く）
-        $('.box').fadeOut("fast");
-        //再表示できるようにいろいろ消しとく
-        $('.select, .btn-wrap, .box-wrap, .box').removeClass('is-inactive');
-        //次の質問へ進むボタンを非表示
-        $('.tool-btn.next').addClass('is-inactive');
-     });
+/*ボタン全体に*/
+.botton{
+    /*カーソルが乗ったら手のひらに*/
+    cursor: pointer;
+    font-family: "游ゴシック", "Hiragino Kaku Gothic Pro","メイリオ",
+    sans-selif !important;
 
-});
+}
+
+.character-img {
+    display: block;  
+    margin: 10px auto;  /* 上下10px、左右は自動で中央寄せ */
+    width: 80%;  /* 画像の幅を親要素の80%に */
+    max-width: 300px;  /* 最大300pxまで */
+}
+
+.story-link {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.story-link a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 40px 10px 20px;
+    background-color: #f4a261;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    /*三角形を作る（上 右 下 左）*/
+}
+
+.story-link a::before {
+    content: "";
+    border-style: solid;
+    display: inline-block;
+    border-width: 7px 0px 7px 10px; /* ▶ を作る */
+    border-color: transparent transparent transparent #fff;
+    position: absolute;
+    top: 50%;  /* ボタンの中央に配置 */
+    transform: translateY(-50%);  /* 真ん中に調整 */
+    right: 20px; /* 右端からの位置 */
+}
+
+.box.result .txt{
+    color: #222;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-block;
+    border-bottom: 3px solid #ffcc00;
+    padding-bottom: 3px;
+}
+
+/* .result-banner（画像）のスタイル */
+.result-banner {
+    display: block; /* ブロック要素にする */
+    width: 250px; /* 幅を指定して小さく */
+    height: auto; /* 高さは自動調整 */
+    position: fixed; /* スクロールに追従しない */
+    top: 50px; /* 上から50px */
+    left: 50%; /* 横中央 */
+    transform: translateX(-50%); /* 横方向中央揃え */
+    z-index: 9999; /* 他の要素より前面に表示 */
+    background: transparent; /* 背景を透明に */
+  }
