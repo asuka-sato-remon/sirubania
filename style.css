@@ -534,7 +534,7 @@ h1.title {
 }
 
 /*ボタン全体に*/
-botton{
+.botton{
     /*カーソルが乗ったら手のひらに*/
     cursor: pointer;
     font-family: "游ゴシック", "Hiragino Kaku Gothic Pro","メイリオ",
@@ -589,9 +589,15 @@ botton{
     padding-bottom: 3px;
 }
 
-.result-banner{
-    display: block;
-    margin: 20px auto 10px auto;
-    width: 80%;
-    max-width: 300px;
-}
+/* .result-banner（画像）のスタイル */
+.result-banner {
+    display: block; /* ブロック要素にする */
+    width: 250px; /* 幅を指定して小さく */
+    height: auto; /* 高さは自動調整 */
+    position: fixed; /* スクロールに追従しない */
+    top: 50px; /* 上から50px */
+    left: 50%; /* 横中央 */
+    transform: translateX(-50%); /* 横方向中央揃え */
+    z-index: 9999; /* 他の要素より前面に表示 */
+    background: transparent; /* 背景を透明に */
+  }
